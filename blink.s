@@ -18,6 +18,9 @@ _start:
     mov r2, #0
     svc #0
 
+    ldr r8, addr_gpio_filedes
+    str r0, [r8]
+
     mov r7, #6
     svc #0
 
