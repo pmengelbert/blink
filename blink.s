@@ -7,18 +7,19 @@ filename: .asciz "/dev/gpiomem"
 .bss
 .lcomm gpio_filedes, 4
 
-.section .text
+.text
 .globl _start
 
 
 _start:
     mov r7, #5
-    ldr r0, addr_filename
+    ldr r0, =addr_filename
+    ldr r0, [r0]
     mov r1, #2
     mov r2, #0
     svc #0
 
-    ldr r8, addr_gpio_filedes
+    ldr r8, =gpio_filedes
     str r0, [r8]
 
     mov r7, #6
@@ -29,5 +30,4 @@ _start:
     svc #0
 
 addr_filename: .word filename
-addr_gpio_filedes: .word gpio_filedes
     

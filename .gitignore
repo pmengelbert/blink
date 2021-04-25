@@ -1,2 +1,3 @@
-blink
-blink.o
+zblink
+zblink.o
+*.un~
