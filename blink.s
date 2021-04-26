@@ -6,10 +6,6 @@ GPIO_PIN_OUTPUT = 0xfffffe7f
 filename: .asciz "/dev/gpiomem"
 sleep_amount: .4byte 1, 0
 
-.bss
-.lcomm gpio_filedes, 4
-.lcomm gpio, 4
-
 .text
 .globl _start
 
@@ -21,23 +17,19 @@ _start:
     mov r2, #0
     svc #0
 
-    ldr r8, =gpio_filedes
-    str r0, [r8]
+    mov r4, r0
 
     @ mmap2
     mov r0, #0
     mov r1, #PAGE_SIZE
     mov r2, #3
     mov r3, #1 
-    ldr r4, [r8]
     ldr r5, =#GPIO_OFFSET
     mov r7, #192
     svc #0
 
     @ store GPIO address
-    ldr r8, =gpio
-    str r0, [r8]
-    ldr r8, [r8]
+    mov r8, r0
 
     @ set the mode of pin 2 to output
     ldr r0, =#GPIO_PIN_OUTPUT
