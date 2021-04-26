@@ -21,22 +21,22 @@ _start:
 
 
     ldr r8, =gpio_filedes
-    str r0, [r8] ; store the file descriptor somewhere
+    str r0, [r8]
 
-    mov r0, #0 ; NULL means address will be determined for me
+    mov r0, #0
     mov r1, #PAGE_SIZE
-    mov r2, #3 ; read and write
-    mov r3, #1 ; shared
+    mov r2, #3
+    mov r3, #1 
     mov r4, [r8]
     mov r5, #GPIO_OFFSET
-    mov r7, #192 ; mmap2
+    mov r7, #192
     svc #0
 
-    ; close the file
-    ; mov r7, #6
-    ; svc #0
+    @ close the file
+    @ mov r7, #6
+    @ svc #0
 
-    ; exit
+    @ exit
     mov r7, #1
     mov r0, #0
     svc #0
