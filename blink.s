@@ -4,8 +4,7 @@ GPIO_PIN_OUTPUT = 0xfffffe7f
 
 .data
 filename: .asciz "/dev/gpiomem"
-@ sleep_amount: .word #4
-@ .word #4
+sleep_amount: .4byte 1, 0
 
 .bss
 .lcomm gpio_filedes, 4
@@ -44,13 +43,26 @@ _start:
     ldr r0, =#GPIO_PIN_OUTPUT
     str r0, [r8]
 
+loop:
     @ clear pin 2
     mov r0, #4
     str r0, [r8, #0x28]
 
+    ldr r0, =sleep_amount
+    mov r1, #0
+    mov r7, #162
+    svc #0
+
     @ turn on pin 2
     mov r0, #4
     str r0, [r8, #0x1c]
+
+    ldr r0, =sleep_amount
+    mov r1, #0
+    mov r7, #162
+    svc #0
+
+    b loop
 
     mov r7, #1
     mov r0, #0
